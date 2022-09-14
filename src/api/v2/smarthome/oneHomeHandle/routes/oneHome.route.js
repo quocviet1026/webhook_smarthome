@@ -86,6 +86,21 @@ mqttClient.on('message', (topic, message) => {
  *          }]
  *      }
  * }
+ * 
+ * updateData:
+ *  {
+ *  "typeMessage" : "updateData,
+ *  "dataMessage" : {
+ *      "properties" : {
+ *          "command" : "removeDevice"
+ *          "data"   : {
+ *              "id" : "",
+ *              "trait" : "",
+ *              "value" : "",
+ *              "timeStamp" : 
+ *          }
+ *      }
+ * }
  */
 events.on(topicListenOnehomeGateway, (messageParsed) => {
   console.log('\n\n--------->>> MQTT oneHome messageParsed: ', messageParsed);

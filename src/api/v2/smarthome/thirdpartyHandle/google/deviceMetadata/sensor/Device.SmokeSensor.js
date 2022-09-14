@@ -13,7 +13,7 @@ class SmokeSensor extends Device {
           rawValueUnit: 'PARTS_PER_MILLION',
         },
         descriptiveCapabilities: {
-          availableStates: ['smoke detected', 'no smoke detected'],
+          availableStates: ['smoke detected', 'high', 'no smoke detected'],
         },
       },
     ],

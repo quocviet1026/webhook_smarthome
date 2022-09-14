@@ -4,6 +4,8 @@ const mqttClient = require('../routes/oneHome.route');
 
 const {
   requestSync,
+  notifications,
+  reportState,
 } = require('../../thirdpartyHandle/google/fulfillment/fulfillment.service');
 
 module.exports = {
@@ -40,6 +42,33 @@ module.exports = {
     // Call RequestSync to Google Home Cloud
     await requestSync(deviceObject.userId);
   },
+
+  updateTrait: (deviceObject) => {
+    console.log('\n\n--->updateTrait, deviceObject: ', deviceObject);
+
+    //For test
+    const userId  = '631710a2da842ecd127d5320';
+    const deviceId = 'smoke_0x0001';
+    const deviceNotiObj = {
+      SensorState : {
+        priority : 0,
+        name : 'SmokeLevel',
+        currentSensorState :  'smoke detected'
+      }
+    }
+
+    const deviceReportObj = {
+      currentSensorStateData : {
+        priority : 0,
+        name : 'SmokeLevel',
+        currentSensorState :  'smoke detected'
+      }
+    }
+
+    // notifications(userId, deviceId, deviceNotiObj);
+    reportState(userId, deviceId, deviceReportObj);
+  },
+
   controlDevice: () => {},
 
   sendMessageToGateway: (message, topic) => {

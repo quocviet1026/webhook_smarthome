@@ -1,12 +1,30 @@
+const util = require('util');
 const { GoogleAuth } = require('google-auth-library');
 const { google } = require('googleapis');
 
 const homegraph = google.homegraph('v1');
 const path = require('path');
-const { uuid } = require('uuidv4');
+// const { uuid } = require('uuidv4');
+const { v4: uuidv4 } = require('uuid')
 
 const redisService = require('../../../../helpers/redisService');
 const DeviceModel = require('../../../oneHomeHandle/models/device.model');
+
+let initGoogleAuth;
+let authClient;
+(initGoogleAuth =  async () => {
+  const auth = new GoogleAuth({
+    // Scopes can be specified either as an array or as a single, space-delimited string.
+    keyFilename: path
+      .join(__dirname, 'onehomedemo-c45ee11ec83b.json')
+      .toString(),
+    scopes: ['https://www.googleapis.com/auth/homegraph'],
+  });
+  // Acquire an auth client, and bind it to all future calls
+  authClient = await auth.getClient();
+  google.options({ auth: authClient });
+})();
+
 
 module.exports = {
   getGatewayIdOfDeviceId: async (listDeviceId) => {
@@ -78,15 +96,7 @@ module.exports = {
   requestSync: async (userId) => {
     console.log(`---> RequestSync: ${userId}`);
     try {
-      const auth = new GoogleAuth({
-        // Scopes can be specified either as an array or as a single, space-delimited string.
-        keyFilename: path
-          .join(__dirname, 'onehomedemo-c45ee11ec83b.json')
-          .toString(),
-        scopes: ['https://www.googleapis.com/auth/homegraph'],
-      });
-      // Acquire an auth client, and bind it to all future calls
-      const authClient = await auth.getClient();
+
       google.options({ auth: authClient });
 
       const res = await homegraph.devices.requestSync({
@@ -105,31 +115,48 @@ module.exports = {
   reportState: async (userId, deviceId, objDataUpdate) => {
     console.log(`---> reportState: ${userId},  ${deviceId},  ${objDataUpdate}`);
     try {
-      const auth = new GoogleAuth({
-        // Scopes can be specified either as an array or as a single, space-delimited string.
-        keyFilename: path
-          .join(__dirname, 'onehomedemo-c45ee11ec83b.json')
-          .toString(),
-        scopes: ['https://www.googleapis.com/auth/homegraph'],
-      });
-      // Acquire an auth client, and bind it to all future calls
-      const authClient = await auth.getClient();
-      google.options({ auth: authClient });
 
       const requestBody = {};
-      requestBody.agentUserId = userId;
-      requestBody.requestId = uuid();
-      requestBody.payload = {};
-      requestBody.payload.devices = {};
-      requestBody.payload.devices.states = {};
-      requestBody.payload.devices.states[deviceId] = objDataUpdate;
+      requestBody.requestBody = {};
+      requestBody.requestBody.agentUserId = userId;
+      requestBody.requestBody.requestId = uuidv4();
+      requestBody.requestBody.payload = {};
+      requestBody.requestBody.payload.devices = {};
+      requestBody.requestBody.payload.devices.states = {};
+      requestBody.requestBody.payload.devices.states[deviceId] = objDataUpdate;
+
+      console.log('\n\n requestBody: ', util.inspect(requestBody,false, null, true));
 
       const res = await homegraph.devices.reportStateAndNotification(
         requestBody
       );
-      console.info(`Request sync ${userId} SUCCESS: ${res}`);
+      console.info(`reportState ${userId} SUCCESS: ${res}`);
     } catch (err) {
-      console.info('Request sync response ERROR: ', err);
+      console.info('reportState response ERROR: ', err);
     }
   },
+
+  notifications : async (userId, deviceId, objDataUpdate) => {
+    console.log('---> notifications: ', userId, deviceId, objDataUpdate);
+    try {
+      const requestBody = {};
+      requestBody.requestBody = {};
+      requestBody.requestBody.agentUserId = userId;
+      requestBody.requestBody.eventId = uuidv4();
+      requestBody.requestBody.requestId = uuidv4();
+      requestBody.requestBody.payload = {};
+      requestBody.requestBody.payload.devices = {};
+      requestBody.requestBody.payload.devices.notifications = {};
+      requestBody.requestBody.payload.devices.notifications[deviceId] = objDataUpdate;
+
+      console.log('\n\requestBody: ', util.inspect(requestBody,false, null, true));
+
+      const res = await homegraph.devices.reportStateAndNotification(
+        requestBody
+      );
+      console.info(`notifications ${userId} SUCCESS: ${res}`);
+    } catch (err) {
+      console.info('notifications response ERROR: ', err);
+    }
+  }
 };

@@ -96,21 +96,7 @@ fulfillment.onExecute(async (body, headers) => {
     console.log('------------>listDeviceResponseCommands: ', listDeviceResponseCommands);
 
     console.groupEnd('onExecute');
-    // return {
-    //   requestId: body.requestId,
-    //   payload: {
-    //     commands: [
-    //       {
-    //         ids: command.devices.map((device) => device.id),
-    //         status: 'SUCCESS',
-    //         states: {
-    //           on: true,
-    //           online: true,
-    //         },
-    //       },
-    //     ],
-    //   },
-    // };
+
     return {
       requestId: body.requestId,
       payload: {
@@ -140,6 +126,14 @@ fulfillment.onQuery(async (body, headers) => {
     const objDeviceResponse = {};
     listDataDevice.forEach((device) => {
       objDeviceResponse[device.id] = {
+        // on : true, //test
+        // currentSensorStateData : [
+        //   {
+        //     name: "SmokeLevel",
+        //     currentSensorState: "smoke detected",
+        //     rawValue: 200           
+        //   }
+        // ],//Test
         online: device.online,
         status: 'SUCCESS',
       };
