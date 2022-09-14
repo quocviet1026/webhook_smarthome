@@ -1,0 +1,27 @@
+POST http://localhost:6363/v1/user/register
+Content-Type:  application/json
+
+{
+    "email" : "user3@gmail.com",
+    "password" : "test"
+}
+
+###
+POST http://13.212.93.144/v1/user/register
+Content-Type:  application/json
+
+{
+    "email" : "user1@gmail.com",
+    "password" : "test"
+}
+
+###
+POST http://localhost:3636/v1/user/login
+Content-Type:  application/json
+
+{
+    "email" : "user1@gmail.com",
+    "password" : "test",
+    "redirect_uri" : "REDIRECT_URI_TEST",
+    "state" : "STATE_TEST"
+}

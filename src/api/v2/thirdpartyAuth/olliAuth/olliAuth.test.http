@@ -1,0 +1,17 @@
+###
+GET http://localhost:6363/v1/googleAuth/auth?client_id=mygoogleid&redirect_uri=REDIRECT_URI&state=STATE_STRING&scope=REQUESTED_SCOPES&response_type=code&user_locale=LOCALE
+
+###
+POST http://localhost:6363/v1/googleAuth/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=mygoogleid&client_secret=mygooglesecret&grant_type=authorization_code&code=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmNkNTJlMDBlOTYwOGEyNWY4ZmZmNmEiLCJpYXQiOjE2NjI0NTA5MTUsImV4cCI6MTY2MjQ1MTUxNX0.hH5W25Qq_JC08GmR9CshrBSEDxhpGROra-1nQZJp5go&redirect_uri=REDIRECT_URI
+
+###
+POST http://localhost:6363/v1/googleAuth/token
+Content-Type: application/x-www-form-urlencoded
+
+client_id=mygoogleid&client_secret=mygooglesecret&grant_type=refresh_token&refresh_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmNkNTJlMDBlOTYwOGEyNWY4ZmZmNmEiLCJpYXQiOjE2NTc4NTY0MDQsImV4cCI6MTY4OTQxNDAwNH0.X-YODaZnPuVCbvenvZPjLoQpKBqQoDgD8LT6I5U24cQ&redirect_uri=REDIRECT_URI
+
+
+

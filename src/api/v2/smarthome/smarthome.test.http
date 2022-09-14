@@ -1,0 +1,142 @@
+###
+GET http://localhost:6363/v1/smarthome/onSync
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmNkNTJlMDBlOTYwOGEyNWY4ZmZmNmEiLCJpYXQiOjE2NjI0NTEwMDksImV4cCI6MTY2MjQ1NDYwOX0.zt_NaM4wP2rPtXaJBwXYkCsmEjRWdsj7rURTCPUAjX0
+
+###
+DELETE http://localhost:6363/v1/smarthome/onDisconnect
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmNkNTJlMDBlOTYwOGEyNWY4ZmZmNmEiLCJpYXQiOjE2NTg5MTE3MTAsImV4cCI6MTY1ODkxNTMxMH0.gAsQLl0lj5s0rF5pcSetOBSq3ZkCvOjka2lm-H4TmhU
+
+###
+POST http://localhost:6363/v1/smarthome/onExecute
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmNkNTJlMDBlOTYwOGEyNWY4ZmZmNmEiLCJpYXQiOjE2NTg5MTE3MTAsImV4cCI6MTY1ODkxNTMxMH0.gAsQLl0lj5s0rF5pcSetOBSq3ZkCvOjka2lm-H4TmhU
+Content-Type:  application/json
+
+{
+  "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
+  "inputs": [
+    {
+      "intent": "action.devices.EXECUTE",
+      "payload": {
+        "commands": [
+          {
+            "devices": [
+              {
+                "id": "0x0001",
+                "customData": {
+                  "fooValue": 74,
+                  "barValue": true,
+                  "bazValue": "sheepdip"
+                }
+              },
+              {
+                "id": "0x0002",
+                "customData": {
+                  "fooValue": 36,
+                  "barValue": false,
+                  "bazValue": "moarsheep"
+                }
+              }
+            ],
+            "execution": [
+              {
+                "command": "action.devices.commands.OnOff",
+                "params": {
+                  "on": true
+                }
+              },
+                {
+                    "command": "action.devices.commands.ColorAbsolute",
+                    "params": {
+                        "color": {
+                        "name": "magenta",
+                        "spectrumRGB": 16711935
+                        }
+                    }
+                },
+                {
+                "command": "action.devices.commands.ColorAbsolute",
+                "params": {
+                    "color": {
+                    "name": "warm white",
+                    "temperature": 3000
+                    }
+                }
+                }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
+
+###
+GET http://localhost:6363/v1/smarthome/onQuery
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmNkNTJlMDBlOTYwOGEyNWY4ZmZmNmEiLCJpYXQiOjE2NTkwNTM5MTksImV4cCI6MTY1OTA1NzUxOX0.FWUg922ztpMot8i_NWGrRzVgY5T1zl5giomrSVBL8mw
+Content-Type:  application/json
+
+{
+  "requestId": "ff36a3cc-ec34-11e6-b1a0-64510650abcf",
+  "inputs": [
+    {
+      "intent": "action.devices.QUERY",
+      "payload": {
+        "devices": [
+          {
+            "id": "0x0001",
+            "customData": {
+              "fooValue": 74,
+              "barValue": true,
+              "bazValue": "foo"
+            }
+          },
+          {
+            "id": "0x0002",
+            "customData": {
+              "fooValue": 12,
+              "barValue": false,
+              "bazValue": "bar"
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
+
+###
+GET http://localhost:6363/v1/smarthome/onQueryTest
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmNkNTJlMDBlOTYwOGEyNWY4ZmZmNmEiLCJpYXQiOjE2NTg5OTgzMzksImV4cCI6MTY1OTAwMTkzOX0.9hDPgai9bX3SKio_vyYW4PzZhQhRHtJw58zP5zLz9RE
+Content-Type:  application/json
+
+{
+    "deviceId" : "0x0001"
+}
+
+###
+POST http://localhost:6363/v1/smarthome/register
+Content-Type:  application/json
+
+{
+  "id" : "0x0003",
+  "name" : "basic_light_3",
+  "connectType" : "bluetooth",
+  "type" : "basicLight",
+  "gatewayId" : "GW0001",
+  "userId" : "62cd52e00e9608a25f8fff6a",
+  "online" : true
+}
+
+###
+POST http://13.212.93.144/v1/smarthome/register
+Content-Type:  application/json
+
+{
+  "id" : "0x0003",
+  "name" : "basic_light_3",
+  "connectType" : "bluetooth",
+  "type" : "basicLight",
+  "gatewayId" : "GW0001",
+  "userId" : "62cd52e00e9608a25f8fff6a",
+  "online" : true
+}

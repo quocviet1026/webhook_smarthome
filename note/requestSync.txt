@@ -1,0 +1,25 @@
+1. Call RequestSync:
+https://developers.google.com/assistant/smarthome/develop/request-sync#node.js
+https://www.youtube.com/watch?v=e1C5WIfZ89s&ab_channel=Sid%27sEClassroom
+https://developers.google.com/assistant/smarthome/develop/report-state   (how to Create serviceaccounts key)
+
+*** Enable the Google HomeGraph API:
+- In the Google Cloud Platform Console, go to the HomeGraph API page:
+https://console.cloud.google.com/apis/api/homegraph.googleapis.com/overview
+- Select the project that matches your smart home project ID.
+- Click ENABLE.
+
+*** Create a Service Account Key:
+In the GCP Console, go to the Create service account key page.:
+https://console.cloud.google.com/iam-admin/serviceaccounts
+From the Service account list, select New service account.
+In the Service account name field, enter a name.
+In the Service account ID field, enter a ID.
+From the Role list, select Service Accounts > Service Account Token Creator.
+
+For the Key type, select the JSON option.
+
+Click Create. A JSON file that contains your key downloads to your computer.
+
+***Use key to Call RequestSync:
+-see file ./src/api/v1/thirdpartyAuth/googleAuth/

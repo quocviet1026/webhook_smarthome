@@ -1,0 +1,58 @@
+25-07-2022	16:22:09------/v1/googleAuth/token --- POST --- jwt expired
+25-07-2022	16:23:36------/v1/googleAuth/token --- POST --- jwt expired
+26-07-2022	15:34:12------/v1/smarthome/onSync --- GET --- Cannot destructure property 'userId' of 'req.payload' as it is undefined.
+26-07-2022	15:36:30------/v1/smarthome/onSync --- GET --- Cannot destructure property 'userId' of 'req.payload' as it is undefined.
+26-07-2022	15:36:38------/v1/smarthome/onSync --- GET --- Cannot destructure property 'userId' of 'req.payload' as it is undefined.
+26-07-2022	15:38:28------/v1/smarthome/onSync --- GET --- Cannot destructure property 'userId' of 'req.payload' as it is undefined.
+26-07-2022	15:39:24------/v1/smarthome/onSync --- GET --- Cannot destructure property 'userId' of 'req.payload' as it is undefined.
+26-07-2022	15:40:49------/v1/smarthome/onSync --- GET --- Cannot destructure property 'userId' of 'req.payload' as it is undefined.
+26-07-2022	15:58:32------/v1/smarthome/onSync --- GET --- Cannot read property 'metadata' of undefined
+26-07-2022	16:21:33------/v1/smarthome/onSync --- GET --- Request missing valid authorization
+26-07-2022	16:23:19------/v1/smarthome/onSync --- GET --- Cannot destructure property 'userId' of 'validateCredentials(...)' as it is undefined.
+26-07-2022	16:35:48------/v1/smarthome/onSync --- GET --- Unauthorized
+26-07-2022	16:36:03------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:14------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:17------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:20------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:21------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:21------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:22------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:22------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:22------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:23------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:23------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:28------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:29------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:30------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:30------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:31------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:36:31------/v1/smarthome/onSync --- GET --- jwt expired
+26-07-2022	16:38:03------/v1/smarthome/onSync --- GET --- Bad Request
+27-07-2022	14:30:29------/v1/smarthome/onExecute --- GET --- jwt expired
+27-07-2022	14:30:29------/v1/smarthome/onExecute --- GET --- jwt expired
+27-07-2022	14:34:08------/v1/smarthome/onExecute --- POST --- Unauthorized
+27-07-2022	14:36:18------/v1/smarthome/onExecute --- POST --- Unauthorized
+27-07-2022	14:38:20------/v1/smarthome/onSync --- GET --- Unauthorized
+27-07-2022	14:39:10------/v1/smarthome/onSync --- GET --- Unauthorized
+27-07-2022	14:40:42------/v1/smarthome/onSync --- GET --- Unauthorized
+27-07-2022	14:42:06------/v1/smarthome/onSync --- GET --- Unauthorized
+27-07-2022	14:43:19------/v1/smarthome/onSync --- GET --- Unauthorized
+27-07-2022	14:45:03------/v1/smarthome/onSync --- GET --- Unauthorized
+27-07-2022	15:47:15------/v1/smarthome/onExecute --- POST --- jwt expired
+27-07-2022	15:54:05------/v1/smarthome/onSync --- GET --- jwt expired
+27-07-2022	15:54:20------/v1/smarthome/onSync --- GET --- jwt expired
+27-07-2022	16:48:53------/v1//smarthome/onDisconnect --- DELETE --- jwt expired
+27-07-2022	16:48:57------/v1//smarthome/onDisconnect --- DELETE --- jwt expired
+27-07-2022	16:49:12------/v1//smarthome/onDisconnect --- DELETE --- jwt expired
+27-07-2022	16:49:20------/v1//smarthome/onDisconnect --- DELETE --- jwt expired
+27-07-2022	16:49:27------/v1//smarthome/onDisconnect --- DELETE --- jwt expired
+27-07-2022	16:49:35------/v1//smarthome/onDisconnect --- DELETE --- jwt expired
+27-07-2022	16:49:41------/v1/smarthome/onDisconnect --- DELETE --- jwt expired
+28-07-2022	15:54:42------/v1/smarthome/onQueryTest --- POST --- Unexpected token ' in JSON at position 7
+28-07-2022	15:54:47------/v1/smarthome/onQueryTest --- POST --- Unexpected token ' in JSON at position 7
+06-09-2022	15:18:44------/v1/user/register --- POST --- "redirect_uri" is required
+06-09-2022	15:20:30------/v1/user/register --- POST --- "redirect_uri" is required
+06-09-2022	15:23:49------/v1/user/register --- POST --- "redirect_uri" is required
+06-09-2022	15:54:31------/v1/smarthome/register --- POST --- Unexpected token } in JSON at position 199
+06-09-2022	15:55:37------/v1/smarthome/register --- POST --- Unexpected token } in JSON at position 199
+06-09-2022	15:59:56------/v1/smarthome/register --- POST --- Unexpected token } in JSON at position 199
