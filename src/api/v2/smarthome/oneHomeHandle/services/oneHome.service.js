@@ -16,20 +16,6 @@ module.exports = {
   addDevice: async (deviceObject) => {
     // console.group('oneHomeHandle addDevice');
     console.log('\n\n--->oneHomeHandle addDevice, deviceObject: ', deviceObject);
-    // // Save Device to Database
-    // const newDevice = new DeviceModel(deviceObject);
-    // const savedUser = newDevice
-    //   .save()
-    //   .then((result) => {
-    //     console.log(`save data success: ${result}`);
-    //   })
-    //   .catch((err) => {
-    //     console.log(`save data error: ${err}`);
-    //   });
-    // // Save key to redis ---> id(deviceId) : gatewayId
-    // await redisService.setKey(deviceObject.deviceEUI, deviceObject.gatewayId);
-    // // Call RequestSync to Google Home Cloud
-    // await requestSync(deviceObject.userId);
     try {
       const arrChild = deviceObject.child;
       const deviceEUI = deviceObject.deviceEUI;
@@ -58,20 +44,39 @@ module.exports = {
     } 
   },
   removeDevice: async (deviceObject) => {
-    console.log('\n\n--->removeDevice, deviceObject: ', deviceObject);
-    // Find and Remove From Database
-    DeviceModel.findOneAndDelete({ deviceEUI: deviceObject.deviceEUI }, (err, docs) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('Deleted Device : ', docs);
-      }
-    });
+    try {
+      console.log('\n\n--->removeDevice, deviceObject: ', deviceObject);
+      // Find and Remove From Database
+      const deviceEUIregex = `${deviceObject.deviceEUI}`;
 
-    // Remove key(deviceId) from Redis
-    await redisService.delKey(deviceObject.deviceEUI);
-    // Call RequestSync to Google Home Cloud
-    await requestSync(deviceObject.userId);
+      const arrListDeviceRemove = await DeviceModel.find({ deviceEUI: {$regex:deviceEUIregex}});
+      console.log('arrListDeviceRemove: ', arrListDeviceRemove);
+
+      const listKeyGatewayId = arrListDeviceRemove.map(deviceObj => {
+        return makeKeyGatewayId(deviceObj.deviceEUI);
+      });
+      console.log('listKeyGatewayId: ', listKeyGatewayId);
+
+      const listKeyDeviceId = arrListDeviceRemove.map(deviceObj => {
+        return makeKeyDeviceId(deviceObj.deviceEUI);
+      });
+      console.log('listKeyDeviceId: ', listKeyDeviceId);
+
+      listKeyGatewayId.forEach(key => {
+        redisService.delKey(key);
+      });
+
+      listKeyDeviceId.forEach(key => {
+        redisService.delKey(key);
+      });
+
+      await DeviceModel.deleteMany({ deviceEUI: {$regex:deviceEUIregex}});
+
+      // Call RequestSync to Google Home Cloud
+      await requestSync(deviceObject.userId);
+    } catch (error) {
+      console.log('oneHomeHandle removeDevice ERROR: ', error);
+    }
   },
 
   updateTrait: (deviceObject) => {

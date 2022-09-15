@@ -62,7 +62,7 @@ mqttClient.on('message', (topic, message) => {
  *  "dataMessage" : {
  *      "properties" : {
  *          "command" : "addDevice"
- *          "data"   : [{
+ *          "data"   : {
  *              "deviceEUI" : "",
  *              "deviceId" : "",
  *              "child" : [1,2,3],
@@ -71,7 +71,7 @@ mqttClient.on('message', (topic, message) => {
  *              "deviceName" : "",
  *              "gatewayId" : "",
  *              "userId" : ""
- *          }]
+ *          }
  *      }
  * }
  *
@@ -81,11 +81,9 @@ mqttClient.on('message', (topic, message) => {
  *  "dataMessage" : {
  *      "properties" : {
  *          "command" : "removeDevice"
- *          "data"   : [{
- *              "id" : "",
- *              "gatewayId" : "",
- *              "userId" : ""
- *          }]
+ *          "data"   : {
+ *              "deviceEUI" : ""
+ *          }
  *      }
  * }
  * 

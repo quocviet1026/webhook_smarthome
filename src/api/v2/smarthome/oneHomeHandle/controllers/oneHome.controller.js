@@ -11,7 +11,7 @@ module.exports = {
     console.group('\n\n---------------------oneHome Controller >register< ---------------------');
     console.log('messageParsed: ', messageParsed);
     const registerType = messageParsed.dataMessage.properties.command;
-    const objectDevice = messageParsed.dataMessage.properties.data[0];
+    const objectDevice = messageParsed.dataMessage.properties.data;
     if (registerType === 'addDevice') {
       addDevice(objectDevice);
     } else if (registerType === 'removeDevice') {
