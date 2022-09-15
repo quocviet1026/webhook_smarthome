@@ -8,8 +8,8 @@ class Device {
   userId;
 
   constructor(data) {
-    this.id = data.id;
-    this.name = data.name;
+    this.id = data.deviceEUI;
+    this.name = data.deviceName;
     this.gatewayId = data.gatewayId;
     this.userId = data.userId;
   }

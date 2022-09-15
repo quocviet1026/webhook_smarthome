@@ -5,20 +5,24 @@ const { Schema } = mongoose;
 const mongoDb = require('../../../database/mongoDb');
 
 const DeviceSchema = new mongoose.Schema({
-  id: {
+  deviceEUI: {
     type: String,
     required: true,
     unique: true,
   },
-  type: {
+  deviceID: {
     type: String,
     required: true,
   },
-  connectType: {
+  deviceType: {
     type: String,
     required: true,
   },
-  name: {
+  connectivityType: {
+    type: String,
+    required: true,
+  },
+  deviceName: {
     type: String,
     required: true,
   },
@@ -30,11 +34,7 @@ const DeviceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  online: {
-    type: Boolean,
-    required: true,
-    default: true,
-  },
+  attributes: { },
 });
 
 module.exports = mongoDb.model('device', DeviceSchema);

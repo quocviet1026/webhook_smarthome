@@ -11,17 +11,17 @@ class DeviceFactory {
     switch (dataDeviceCreate.deviceType) {
       case 'basicLight':
         return new BasicLight(dataDeviceCreate);
-      case 'cctLight':
+      case 'typeRDCCTLight':
         return new CctLight(dataDeviceCreate);
-      case 'rgbCctLight':
+      case 'typeRDRGBCCTLight':
         return new RgbCctLight(dataDeviceCreate);
-      case 'basicOutlet':
+      case 'typeSmartPlug':
         return new BasicOutlet(dataDeviceCreate);
-      case 'basicSwitch':
+      case 'typeOnOffLight':
         return new BasicSwitch(dataDeviceCreate);
-      case 'tempHumiSensor':
+      case 'typeTempSensor':
         return new TempHumiSensor(dataDeviceCreate);
-      case 'smokeSensor':
+      case 'typeIASFire':
         return new SmokeSensor(dataDeviceCreate);
       default:
         console.log(

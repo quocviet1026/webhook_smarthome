@@ -82,11 +82,11 @@ module.exports = {
         .catch((error) => reject(error));
     }),
 
-  getDataDevices: async (listDeviceId) => {
-    // console.log('---listDeviceId: ', listDeviceId);
-    const listDeviceDataPromise = listDeviceId.map((ObjDevice) =>
+  getDataDevices: async (listDeviceEUI) => {
+    console.log('---listDeviceEUI: ', listDeviceEUI);
+    const listDeviceDataPromise = listDeviceEUI.map((ObjDevice) =>
       // console.log('getDataDevices---ObjDevice: ', ObjDevice);
-      DeviceModel.findOne({ id: ObjDevice.id })
+      DeviceModel.findOne({ deviceEUI: ObjDevice.id })
     );
     const listDataDevice = await Promise.all(listDeviceDataPromise);
 

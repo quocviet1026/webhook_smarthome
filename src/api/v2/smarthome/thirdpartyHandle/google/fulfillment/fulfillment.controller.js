@@ -125,18 +125,8 @@ fulfillment.onQuery(async (body, headers) => {
     console.log('listDataDevice: ', listDataDevice);
     const objDeviceResponse = {};
     listDataDevice.forEach((device) => {
-      objDeviceResponse[device.id] = {
-        // on : true, //test
-        // currentSensorStateData : [
-        //   {
-        //     name: "SmokeLevel",
-        //     currentSensorState: "smoke detected",
-        //     rawValue: 200           
-        //   }
-        // ],//Test
-        online: device.online,
-        status: 'SUCCESS',
-      };
+      objDeviceResponse[device.deviceEUI] = device.attributes;
+      objDeviceResponse[device.deviceEUI].status = 'SUCCESS';
     });
     console.log('objDeviceResponse: ', objDeviceResponse);
     console.groupEnd('onQuery');

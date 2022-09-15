@@ -49,7 +49,7 @@ mqttClient.on('message', (topic, message) => {
     /* Trigger event */
     events.emit(topic, messageParsed);
   } catch (e) {
-    /// /console.log('--->>>Agent Process MQTT Interface<<<--- Error Parsing MQTT Received: ' + e);
+    console.log('--->>>neHome Route MQTT message error: ' + e);
   }
 });
 
@@ -63,10 +63,12 @@ mqttClient.on('message', (topic, message) => {
  *      "properties" : {
  *          "command" : "addDevice"
  *          "data"   : [{
- *              "id" : "",
- *              "type" : "",
- *              "connectType" : "",
- *              "name" : "",
+ *              "deviceEUI" : "",
+ *              "deviceId" : "",
+ *              "child" : [1,2,3],
+ *              "deviceType" : "",
+ *              "connectivityType" : "",
+ *              "deviceName" : "",
  *              "gatewayId" : "",
  *              "userId" : ""
  *          }]
