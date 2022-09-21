@@ -4,11 +4,18 @@
 */
 
 module.exports = {
-    createDeviceEUI : (deviceEUI, arrayChild) => {
-        let arrayDeviceEUI = [];
-        arrayDeviceEUI = arrayChild.map(child => {
-            return deviceEUI + '_' + child.toString();
-        });
-        return(arrayDeviceEUI);
-    },
-}
+  createArrayDeviceEUI: (deviceEUI, arrayChild) => {
+    let arrayDeviceEUI = [];
+    arrayDeviceEUI = arrayChild.map(
+      (child) => `${deviceEUI}#$%@@${child.toString()}`
+    );
+    return arrayDeviceEUI;
+  },
+
+  createMixDeviceEUI: (deviceEUI, child) => {
+    const deviceEuiReturn = `${deviceEUI}#$%@@${child.toString()}`;
+    return deviceEuiReturn;
+  },
+
+  createRawDeviceEUI: (mixDeviceEUI) => mixDeviceEUI.split('#$%@@')[0],
+};

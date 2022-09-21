@@ -5,14 +5,14 @@ const { google } = require('googleapis');
 const homegraph = google.homegraph('v1');
 const path = require('path');
 // const { uuid } = require('uuidv4');
-const { v4: uuidv4 } = require('uuid')
+const { v4: uuidv4 } = require('uuid');
 
 const redisService = require('../../../../helpers/redisService');
 const DeviceModel = require('../../../oneHomeHandle/models/device.model');
 
 let initGoogleAuth;
 let authClient;
-(initGoogleAuth =  async () => {
+(initGoogleAuth = async () => {
   const auth = new GoogleAuth({
     // Scopes can be specified either as an array or as a single, space-delimited string.
     keyFilename: path
@@ -24,7 +24,6 @@ let authClient;
   authClient = await auth.getClient();
   google.options({ auth: authClient });
 })();
-
 
 module.exports = {
   getGatewayIdOfDeviceId: async (listDeviceId) => {
@@ -96,7 +95,6 @@ module.exports = {
   requestSync: async (userId) => {
     console.log(`---> RequestSync: ${userId}`);
     try {
-
       google.options({ auth: authClient });
 
       const res = await homegraph.devices.requestSync({
@@ -115,7 +113,6 @@ module.exports = {
   reportState: async (userId, deviceId, objDataUpdate) => {
     console.log(`---> reportState: ${userId},  ${deviceId},  ${objDataUpdate}`);
     try {
-
       const requestBody = {};
       requestBody.requestBody = {};
       requestBody.requestBody.agentUserId = userId;
@@ -125,7 +122,10 @@ module.exports = {
       requestBody.requestBody.payload.devices.states = {};
       requestBody.requestBody.payload.devices.states[deviceId] = objDataUpdate;
 
-      console.log('\n\n requestBody: ', util.inspect(requestBody,false, null, true));
+      console.log(
+        '\n\n requestBody: ',
+        util.inspect(requestBody, false, null, true)
+      );
 
       const res = await homegraph.devices.reportStateAndNotification(
         requestBody
@@ -136,7 +136,7 @@ module.exports = {
     }
   },
 
-  notifications : async (userId, deviceId, objDataUpdate) => {
+  notifications: async (userId, deviceId, objDataUpdate) => {
     console.log('---> notifications: ', userId, deviceId, objDataUpdate);
     try {
       const requestBody = {};
@@ -147,9 +147,13 @@ module.exports = {
       requestBody.requestBody.payload = {};
       requestBody.requestBody.payload.devices = {};
       requestBody.requestBody.payload.devices.notifications = {};
-      requestBody.requestBody.payload.devices.notifications[deviceId] = objDataUpdate;
+      requestBody.requestBody.payload.devices.notifications[deviceId] =
+        objDataUpdate;
 
-      console.log('\n\requestBody: ', util.inspect(requestBody,false, null, true));
+      console.log(
+        '\n\requestBody: ',
+        util.inspect(requestBody, false, null, true)
+      );
 
       const res = await homegraph.devices.reportStateAndNotification(
         requestBody
@@ -158,5 +162,5 @@ module.exports = {
     } catch (err) {
       console.info('notifications response ERROR: ', err);
     }
-  }
+  },
 };

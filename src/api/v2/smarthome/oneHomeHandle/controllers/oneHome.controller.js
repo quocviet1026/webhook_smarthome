@@ -38,7 +38,7 @@ module.exports = {
     console.group('\n\n---------------------oneHome Controller >updateData< ---------------------');
     console.log('messageParsed: ', messageParsed);
     const updateType = messageParsed.dataMessage.properties.command;
-    if(updateType === 'updateTrait') {
+    if (updateType === 'updateStrait') {
       updateTrait(messageParsed);
     }
     // eslint-disable-next-line prettier/prettier

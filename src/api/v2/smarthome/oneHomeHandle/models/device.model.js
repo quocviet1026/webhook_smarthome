@@ -34,7 +34,7 @@ const DeviceSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  attributes: { },
+  attributes: {},
 });
 
 module.exports = mongoDb.model('device', DeviceSchema);

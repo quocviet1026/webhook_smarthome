@@ -28,7 +28,7 @@ module.exports = {
 
       const queryLogin = `?redirect_uri=${redirect_uri}&state=${state}`;
       console.log('queryLogin: ', queryLogin);
-      const redirectUrl = `/v1/user/login${queryLogin}`;
+      const redirectUrl = `/v2/user/login${queryLogin}`;
       console.log('redirectUrl: ', redirectUrl);
       return res.redirect(redirectUrl);
     } catch (error) {
@@ -91,6 +91,7 @@ module.exports = {
         }
         case 'refresh_token': {
           const { refresh_token } = req.body;
+          console.log(`refresh_token: ${refresh_token}`);
 
           if (!refresh_token) {
             console.error(`refresh_token invalid`);

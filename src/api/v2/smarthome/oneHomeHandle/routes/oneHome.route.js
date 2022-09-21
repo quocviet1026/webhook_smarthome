@@ -49,7 +49,7 @@ mqttClient.on('message', (topic, message) => {
     /* Trigger event */
     events.emit(topic, messageParsed);
   } catch (e) {
-    console.log('--->>>neHome Route MQTT message error: ' + e);
+    console.log(`--->>>neHome Route MQTT message error: ${e}`);
   }
 });
 
@@ -86,18 +86,19 @@ mqttClient.on('message', (topic, message) => {
  *          }
  *      }
  * }
- * 
+ *
  * updateData:
  *  {
  *  "typeMessage" : "updateData,
  *  "dataMessage" : {
  *      "properties" : {
- *          "command" : "removeDevice"
+ *          "command" : "updateStrait",
  *          "data"   : {
- *              "id" : "",
+ *              "deviceEUI" : "",
  *              "trait" : "",
+ *              "child" : 1,
  *              "value" : "",
- *              "timeStamp" : 
+ *              "timeStamp" : 121234123s
  *          }
  *      }
  * }
