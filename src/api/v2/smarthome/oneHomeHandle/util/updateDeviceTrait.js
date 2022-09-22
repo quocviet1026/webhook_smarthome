@@ -16,7 +16,7 @@ const {
 const serviceUpdateTrait = {
   updateTraitOnOff: async (deviceEuiInDB, value) => {
     try {
-      console.group('updateTraitOnOff');
+      console.log('updateTraitOnOff');
       let valueUpdate = true;
       if((value === '0') || (value === 0)) {
         valueUpdate = false;
@@ -44,9 +44,8 @@ const serviceUpdateTrait = {
       const userId = await redisService.getKey(keyToGetUserId);
       console.log('userId: ', userId);
 
-
       reportState(userId, deviceEuiInDB, deviceReportObj);
-      console.groupEnd('updateTraitOnOff');
+      console.log('updateTraitOnOff SUCCESS');
       return dataUpdated;
     } catch (error) {
       console.log('updateTraitOnOff ERROR: ', error);
@@ -57,17 +56,36 @@ const serviceUpdateTrait = {
 
   updateTraitBrightness: async (deviceEuiInDB, value) => {
     try {
-      const fillter = { deviceEuiInDB };
-      const update = { 'attributes.brightness': value };
+      console.log('updateTraitBrightness');
+      let valueUpdate = parseInt(value);
+      const fillter = { deviceEUI : deviceEuiInDB };
+      console.log('fillter: ', fillter);
+      const update =  { 'attributes.brightness': valueUpdate };
       const option = { new: true };
       const dataUpdated = await DeviceModel.findOneAndUpdate(
         fillter,
         { $set: update },
         option
       );
+
+      const deviceReportObj = {
+        brightness: valueUpdate,
+      };
+
+      const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB);
+      console.log('rawDeviceEUI: ', rawDeviceEUI);
+
+      const keyToGetUserId = makeKeyUserId(rawDeviceEUI);
+      console.log('keyToGetUserId: ', keyToGetUserId);
+
+      const userId = await redisService.getKey(keyToGetUserId);
+      console.log('userId: ', userId);
+
+      reportState(userId, deviceEuiInDB, deviceReportObj);
+      console.log('updateTraitBrightness SUCCESS');
       return dataUpdated;
     } catch (error) {
-      console.log('updateTraitBrightness ERROR: ', error);
+        console.log('updateTraitBrightness ERROR: ', error);
       dataUpdated = undefined;
       return dataUpdated;
     }
