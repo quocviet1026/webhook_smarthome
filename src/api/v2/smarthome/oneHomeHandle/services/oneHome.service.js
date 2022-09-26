@@ -116,35 +116,15 @@ module.exports = {
 
     const dataUpdate = deviceObject.dataMessage.properties.data;
     console.log('dataUpdate: ', dataUpdate);
-    const { deviceEUI, child, trait, value, timeStamp } = dataUpdate;
+    // const { deviceEUI, child, trait, value, timeStamp } = dataUpdate;
     await updateDeviceTrait(dataUpdate);
-
-    // console.log('updateTrait ERROR, not support trait: ', trait);
-
-    // For test
-    // const userId = '631710a2da842ecd127d5320';
-    // const deviceId = 'smoke_0x0001';
-    // const deviceNotiObj = {
-    //   SensorState: {
-    //     priority: 0,
-    //     name: 'SmokeLevel',
-    //     currentSensorState: 'smoke detected',
-    //   },
-    // };
-
-    // const deviceReportObj = {
-    //   currentSensorStateData: {
-    //     priority: 0,
-    //     name: 'SmokeLevel',
-    //     currentSensorState: 'smoke detected',
-    //   },
-    // };
-
     // notifications(userId, deviceId, deviceNotiObj);
     // reportState(userId, deviceId, deviceReportObj);
   },
 
-  controlDevice: () => {},
+  controlDevice: async (arrDeviceEUI, arrCommandControl) => {
+    
+  },
 
   sendMessageToGateway: (message, topic) => {
     console.log(

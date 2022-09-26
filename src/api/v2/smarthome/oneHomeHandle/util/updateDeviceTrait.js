@@ -12,6 +12,7 @@ const {
   notifications,
   reportState,
 } = require('../../thirdpartyHandle/google/fulfillment/fulfillment.service');
+const {rgbToDec} = require('./convertColor');
 
 const serviceUpdateTrait = {
   updateTraitOnOff: async (deviceEuiInDB, value) => {
@@ -93,28 +94,81 @@ const serviceUpdateTrait = {
 
   updateTraitTempColor: async (deviceEuiInDB, value) => {
     try {
-      const fillter = { deviceEuiInDB };
-      const update = { 'attributes.color.temperatureK': value };
+      console.log('updateTraitTempColor: ', value);
+      let valueUpdate = parseInt(value);
+      const fillter = { deviceEUI : deviceEuiInDB };
+      console.log('fillter: ', fillter);
+      const update =  { 'attributes.color.temperatureK': valueUpdate };
       const option = { new: true };
       const dataUpdated = await DeviceModel.findOneAndUpdate(
         fillter,
         { $set: update },
         option
       );
+
+      const deviceReportObj = {
+        color: {
+            temperatureK : valueUpdate
+        },
+      };
+
+      const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB);
+      console.log('rawDeviceEUI: ', rawDeviceEUI);
+
+      const keyToGetUserId = makeKeyUserId(rawDeviceEUI);
+      console.log('keyToGetUserId: ', keyToGetUserId);
+
+      const userId = await redisService.getKey(keyToGetUserId);
+      console.log('userId: ', userId);
+
+      reportState(userId, deviceEuiInDB, deviceReportObj);
+      console.log('updateTraitTempColor SUCCESS');
       return dataUpdated;
     } catch (error) {
-      console.log('updateTraitTempColor ERROR: ', error);
+        console.log('updateTraitTempColor ERROR: ', error);
       dataUpdated = undefined;
       return dataUpdated;
     }
   },
 
-  updateTraitColor: async (deviceEuiInDB, value) => {
-    // const fillter = {deviceEuiInDB};
-    // const update = {"attributes.color.temperatureK" : value};
-    // const option = {new : true};
-    // const dataUpdated =  await DeviceModel.findOneAndUpdate(fillter, {$set: update}, option);
-    // return dataUpdated;
+  updateTraitColor: async (deviceEuiInDB, value) => {  //value : "R, G, B"
+    try {
+        console.log('updateTraitColor: ', value);
+        const rgbArray = value.split(',');
+        let valueUpdateInt = rgbToDec(parseInt(rgbArray[0]),parseInt(rgbArray[1]),parseInt(rgbArray[2]));
+        const fillter = { deviceEUI : deviceEuiInDB };
+        console.log('fillter: ', fillter);
+        const update =  { 'attributes.color.spectrumRgb': valueUpdateInt };
+        const option = { new: true };
+        const dataUpdated = await DeviceModel.findOneAndUpdate(
+        fillter,
+        { $set: update },
+        option
+        );
+
+        const deviceReportObj = {
+            color: {
+                spectrumRgb : valueUpdateInt
+            },
+        };
+
+        const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB);
+        console.log('rawDeviceEUI: ', rawDeviceEUI);
+
+        const keyToGetUserId = makeKeyUserId(rawDeviceEUI);
+        console.log('keyToGetUserId: ', keyToGetUserId);
+
+        const userId = await redisService.getKey(keyToGetUserId);
+        console.log('userId: ', userId);
+
+        reportState(userId, deviceEuiInDB, deviceReportObj);
+        console.log('updateTraitColor SUCCESS');
+        return dataUpdated;
+    } catch (error) {
+        console.log('updateTraitColor ERROR: ', error);
+        dataUpdated = undefined;
+        return dataUpdated;
+    }
   },
 };
 
