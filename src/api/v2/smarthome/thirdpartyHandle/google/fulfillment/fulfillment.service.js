@@ -36,7 +36,8 @@ module.exports = {
     return listGatewayId;
   },
 
-  convertGooglecommandToTrait: (execution) => {
+  convertGoogleCommandToOneHomeTrait: (execution) => {
+    console.log('convertGoogleCommandToOneHomeTrait: ', execution);
     switch (execution.command) {
       case 'action.devices.commands.OnOff':
         return {
@@ -46,7 +47,7 @@ module.exports = {
       case 'action.devices.commands.BrightnessAbsolute':
         return {
           traitName: 'traitBrightness',
-          value: execution.params.color.brightness,
+          value: execution.params.brightness,
         };
       case 'action.devices.commands.ColorAbsolute':
         if (execution.params.color.temperature) {
@@ -63,6 +64,7 @@ module.exports = {
         }
         break;
       default:
+        console.log('Not support execution.command: ', execution.command);
         return undefined;
     }
   },

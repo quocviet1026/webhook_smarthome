@@ -10,7 +10,7 @@ module.exports = {
 
     hexToRgb : (stringHex) => {
         const aRgbHex = stringHex.match(/.{1,2}/g);
-        const aRgb = `"${parseInt(aRgbHex[0], 16)},${parseInt(aRgbHex[1], 16)},${parseInt(aRgbHex[2], 16)}"`;
+        const aRgb = `${parseInt(aRgbHex[0], 16)},${parseInt(aRgbHex[1], 16)},${parseInt(aRgbHex[2], 16)}`;
             
         return aRgb;   //"R, G, B"
     },
@@ -18,7 +18,7 @@ module.exports = {
     decToRgb : (decNum) => {
         const stringHex = decNum.toString(16);
         const aRgbHex = stringHex.match(/.{1,2}/g);
-        const aRgb = `"${parseInt(aRgbHex[0], 16)},${parseInt(aRgbHex[1], 16)},${parseInt(aRgbHex[2], 16)}"`;
+        const aRgb = `${parseInt(aRgbHex[0], 16)},${parseInt(aRgbHex[1], 16)},${parseInt(aRgbHex[2], 16)}`;
             
         return aRgb;   //"R, G, B"
     }

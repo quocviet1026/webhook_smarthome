@@ -1,6 +1,6 @@
 const DeviceModel = require('../models/device.model');
 const redisService = require('../../../helpers/redisService');
-const mqttClient = require('../routes/oneHome.route');
+// const mqttClient = require('../routes/oneHome.route');
 const { createArrayDeviceEUI } = require('../util/convertEuiDevice');
 const {
   makeKeyGatewayId,
@@ -8,6 +8,7 @@ const {
   makeKeyUserId,
 } = require('../util/makeKeyRedis');
 const { updateDeviceTrait } = require('../util/updateDeviceTrait');
+const {controlPhysicalDevice} = require('../util/controlDevice');
 const deviceFactory = require('../deviceMetadata/device.factory');
 
 const {
@@ -123,19 +124,19 @@ module.exports = {
   },
 
   controlDevice: async (arrDeviceEUI, arrCommandControl) => {
-    
+    return await controlPhysicalDevice(arrDeviceEUI, arrCommandControl);
   },
 
-  sendMessageToGateway: (message, topic) => {
-    console.log(
-      `\n\n--->sendMessageToGateway --- topic: ${topic}, message: ${message} `
-    );
-    try {
-      mqttClient.publish(topic, JSON.stringify(message), { qos: 0 }, (e) => {
-        console.log('sendMessageToGateway ERROR: ', e);
-      });
-    } catch (e) {
-      console.log('sendMessageToGateway ERROR: ', e);
-    }
-  },
+  // sendMessageToGateway: (message, topic) => {
+  //   console.log(
+  //     `\n\n--->sendMessageToGateway --- topic: ${topic}, message: ${message} `
+  //   );
+  //   try {
+  //     mqttClient.publish(topic, JSON.stringify(message), { qos: 0 }, (e) => {
+  //       console.log('sendMessageToGateway ERROR: ', e);
+  //     });
+  //   } catch (e) {
+  //     console.log('sendMessageToGateway ERROR: ', e);
+  //   }
+  // },
 };

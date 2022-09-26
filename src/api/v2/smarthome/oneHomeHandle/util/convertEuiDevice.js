@@ -17,5 +17,10 @@ module.exports = {
     return deviceEuiReturn;
   },
 
-  createRawDeviceEUI: (mixDeviceEUI) => mixDeviceEUI.split('#$%@@')[0],
+  createRawDeviceEUI: (mixDeviceEUI) =>  {
+    return {
+      deviceEUI: mixDeviceEUI.split('#$%@@')[0],
+      child: mixDeviceEUI.split('#$%@@')[1]
+    }
+  },
 };

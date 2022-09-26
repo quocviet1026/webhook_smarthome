@@ -36,7 +36,7 @@ const serviceUpdateTrait = {
         on: valueUpdate,
       };
 
-      const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB);
+      const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB).deviceEUI;
       console.log('rawDeviceEUI: ', rawDeviceEUI);
 
       const keyToGetUserId = makeKeyUserId(rawDeviceEUI);
@@ -73,7 +73,7 @@ const serviceUpdateTrait = {
         brightness: valueUpdate,
       };
 
-      const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB);
+      const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB).deviceEUI;
       console.log('rawDeviceEUI: ', rawDeviceEUI);
 
       const keyToGetUserId = makeKeyUserId(rawDeviceEUI);
@@ -112,7 +112,7 @@ const serviceUpdateTrait = {
         },
       };
 
-      const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB);
+      const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB).deviceEUI;
       console.log('rawDeviceEUI: ', rawDeviceEUI);
 
       const keyToGetUserId = makeKeyUserId(rawDeviceEUI);
@@ -152,7 +152,7 @@ const serviceUpdateTrait = {
             },
         };
 
-        const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB);
+        const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB).deviceEUI;
         console.log('rawDeviceEUI: ', rawDeviceEUI);
 
         const keyToGetUserId = makeKeyUserId(rawDeviceEUI);

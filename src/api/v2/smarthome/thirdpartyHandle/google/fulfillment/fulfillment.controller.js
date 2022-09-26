@@ -4,9 +4,10 @@ const deviceFactory = require('../deviceMetadata/device.factory');
 const { validateCredentials } = require('../../../../helpers/jwtService');
 const {
   getGatewayIdOfDeviceId,
-  convertGooglecommandToTrait,
+  convertGoogleCommandToOneHomeTrait,
   getDataDevices,
 } = require('./fulfillment.service');
+const {controlDevice} = require('../../../oneHomeHandle/services/oneHome.service');
 
 const fulfillment = smarthome();
 
@@ -68,29 +69,32 @@ fulfillment.onExecute(async (body, headers) => {
     console.log('devices request: ', devices);
 
     console.log('execution: ', execution);
-    const executionConvert = execution.map(convertGooglecommandToTrait);
+    const executionConvert = execution.map(convertGoogleCommandToOneHomeTrait);
 
     console.log('\n\n-------------> executionConvert: ', executionConvert);
 
-    let onValue = true;
-    if (
-      executionConvert[0].traitName === 'traitOnOff' &&
-      executionConvert[0].value === 'Off'
-    ) {
-      onValue = false;
-    }
+    // let onValue = true;
+    // if (
+    //   executionConvert[0].traitName === 'traitOnOff' &&
+    //   executionConvert[0].value === 'Off'
+    // ) {
+    //   onValue = false;
+    // }
 
     const listDeviceId = command.devices.map((device) => device.id);
     console.log('listDeviceId: ', listDeviceId);
+    
 
-    const listDeviceResponseCommands = listDeviceId.map((deviceId) => ({
-      ids: [deviceId],
-      status: 'SUCCESS',
-      states: {
-        online: true,
-        on: onValue,
-      },
-    }));
+    // const listDeviceResponseCommands = listDeviceId.map((deviceId) => ({
+    //   ids: [deviceId],
+    //   status: 'SUCCESS',
+    //   states: {
+    //     online: true,
+    //     on: onValue,
+    //   },
+    // }));
+
+    listDeviceResponseCommands = await controlDevice(listDeviceId, executionConvert);
 
     // eslint-disable-next-line prettier/prettier
     console.log('------------>listDeviceResponseCommands: ', listDeviceResponseCommands);

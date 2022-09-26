@@ -19,7 +19,7 @@ module.exports = {
     return listGatewayId;
   },
 
-  convertGooglecommandToTrait: (execution) => {
+  convertGoogleCommandToOneHomeTrait: (execution) => {
     switch (execution.command) {
       case 'action.devices.commands.OnOff':
         return {

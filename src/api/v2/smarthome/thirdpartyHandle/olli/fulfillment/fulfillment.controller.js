@@ -4,7 +4,7 @@ const deviceFactory = require('../deviceMetadata/device.factory');
 const { validateCredentials } = require('../../../../helpers/jwtService');
 const {
   getGatewayIdOfDeviceId,
-  convertGooglecommandToTrait,
+  convertGoogleCommandToOneHomeTrait,
   getDataDevices,
 } = require('./fulfillment.service');
 
@@ -68,7 +68,7 @@ fulfillment.onExecute(async (body, headers) => {
     console.log('devices request: ', devices);
 
     console.log('execution: ', execution);
-    const executionConvert = execution.map(convertGooglecommandToTrait);
+    const executionConvert = execution.map(convertGoogleCommandToOneHomeTrait);
 
     console.log(
       '\n\n-----------------------> executionConvert: ',
