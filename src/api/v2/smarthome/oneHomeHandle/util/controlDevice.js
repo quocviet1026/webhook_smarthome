@@ -128,6 +128,49 @@ const serviceControl = {
             return error;
         }
     },
+
+    controlTempColor : async (arrObjDeviceEuiChild, arrCommandControlConverted) => {
+        try {
+            const arrPromiseGetDeviceID = arrObjDeviceEuiChild.map((objDeviceEuiChild) => {
+                return getKey(makeKeyDeviceId(objDeviceEuiChild.deviceEUI));
+            })
+            const arrDeviceID = await Promise.all(arrPromiseGetDeviceID);
+            console.log('arrGetDeviceID: ', arrDeviceID);
+    
+            const arrObjCommandReq = arrObjDeviceEuiChild.map((objDeviceEuiChild) => {
+                // const deviceID = await getKey(makeKeyDeviceId(objDeviceEuiChild.deviceEUI));
+                return {
+                    deviceEUI : objDeviceEuiChild.deviceEUI,
+                    deviceID : 'deviceID',
+                    child : objDeviceEuiChild.child,
+                    traitName : arrCommandControlConverted[0].traitName,
+                    value: arrCommandControlConverted[0].value
+                }
+            })
+
+            arrDeviceID.forEach((currentValue, index) => {
+                arrObjCommandReq[index].deviceID = currentValue;
+            })
+
+            console.log('----------> arrObjCommandReq <----------------: ', arrObjCommandReq);
+    
+            const listDeviceResponseCommands = arrObjCommandReq.map((objDevice) => ({
+                ids: [objDevice.deviceEUI],
+                status: 'SUCCESS',
+                states: {
+                  online: true,
+                  color: {
+                    temperatureK : arrCommandControlConverted[0].value
+                  },
+                },
+              }));
+    
+              console.log('----------> listDeviceResponseCommands: ', listDeviceResponseCommands);
+              return listDeviceResponseCommands;   
+        } catch (error) {
+            return error;
+        }
+    },
 }
 
 module.exports = {
