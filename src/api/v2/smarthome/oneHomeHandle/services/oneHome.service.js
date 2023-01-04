@@ -8,13 +8,13 @@ const {
   makeKeyUserId,
 } = require('../util/makeKeyRedis');
 const { updateDeviceTrait } = require('../util/updateDeviceTrait');
-const {controlPhysicalDevice} = require('../util/controlDevice');
+const { controlPhysicalDevice } = require('../util/controlDevice');
 const deviceFactory = require('../deviceMetadata/device.factory');
 
 const {
   requestSync,
-  notifications,
-  reportState,
+  // notifications,
+  // reportState,
 } = require('../../thirdpartyHandle/google/fulfillment/fulfillment.service');
 
 module.exports = {
@@ -124,7 +124,8 @@ module.exports = {
   },
 
   controlDevice: async (arrDeviceEUI, arrCommandControl) => {
-    return await controlPhysicalDevice(arrDeviceEUI, arrCommandControl);
+    const ret = await controlPhysicalDevice(arrDeviceEUI, arrCommandControl);
+    return ret;
   },
 
   // sendMessageToGateway: (message, topic) => {
