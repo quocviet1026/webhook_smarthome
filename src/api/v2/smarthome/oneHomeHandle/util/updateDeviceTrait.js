@@ -5,24 +5,24 @@ const {
   makeKeyDeviceId,
   makeKeyUserId,
 } = require('./makeKeyRedis');
-const {createRawDeviceEUI} = require('./convertEuiDevice');
+const { createRawDeviceEUI } = require('./convertEuiDevice');
 const { createMixDeviceEUI } = require('./convertEuiDevice');
 const {
-  requestSync,
-  notifications,
+  // requestSync,
+  // notifications,
   reportState,
 } = require('../../thirdpartyHandle/google/fulfillment/fulfillment.service');
-const {rgbToDec} = require('./convertColor');
+const { rgbToDec } = require('./convertColor');
 
 const serviceUpdateTrait = {
   updateTraitOnOff: async (deviceEuiInDB, value) => {
     try {
       console.log('updateTraitOnOff');
       let valueUpdate = true;
-      if((value === '0') || (value === 0)) {
+      if (value === '0' || value === 0) {
         valueUpdate = false;
       }
-      const fillter = { deviceEUI : deviceEuiInDB };
+      const fillter = { deviceEUI: deviceEuiInDB };
       console.log('fillter: ', fillter);
       const update = { 'attributes.on': valueUpdate };
       const option = { new: true };
@@ -50,7 +50,7 @@ const serviceUpdateTrait = {
       return dataUpdated;
     } catch (error) {
       console.log('updateTraitOnOff ERROR: ', error);
-      dataUpdated = undefined;
+      const dataUpdated = undefined;
       return dataUpdated;
     }
   },
@@ -58,10 +58,10 @@ const serviceUpdateTrait = {
   updateTraitBrightness: async (deviceEuiInDB, value) => {
     try {
       console.log('updateTraitBrightness');
-      let valueUpdate = parseInt(value);
-      const fillter = { deviceEUI : deviceEuiInDB };
+      const valueUpdate = parseInt(value);
+      const fillter = { deviceEUI: deviceEuiInDB };
       console.log('fillter: ', fillter);
-      const update =  { 'attributes.brightness': valueUpdate };
+      const update = { 'attributes.brightness': valueUpdate };
       const option = { new: true };
       const dataUpdated = await DeviceModel.findOneAndUpdate(
         fillter,
@@ -86,8 +86,8 @@ const serviceUpdateTrait = {
       console.log('updateTraitBrightness SUCCESS');
       return dataUpdated;
     } catch (error) {
-        console.log('updateTraitBrightness ERROR: ', error);
-      dataUpdated = undefined;
+      console.log('updateTraitBrightness ERROR: ', error);
+      const dataUpdated = undefined;
       return dataUpdated;
     }
   },
@@ -95,10 +95,10 @@ const serviceUpdateTrait = {
   updateTraitTempColor: async (deviceEuiInDB, value) => {
     try {
       console.log('updateTraitTempColor: ', value);
-      let valueUpdate = parseInt(value);
-      const fillter = { deviceEUI : deviceEuiInDB };
+      const valueUpdate = parseInt(value);
+      const fillter = { deviceEUI: deviceEuiInDB };
       console.log('fillter: ', fillter);
-      const update =  { 'attributes.color.temperatureK': valueUpdate };
+      const update = { 'attributes.color.temperatureK': valueUpdate };
       const option = { new: true };
       const dataUpdated = await DeviceModel.findOneAndUpdate(
         fillter,
@@ -108,7 +108,7 @@ const serviceUpdateTrait = {
 
       const deviceReportObj = {
         color: {
-            temperatureK : valueUpdate
+          temperatureK: valueUpdate,
         },
       };
 
@@ -125,49 +125,54 @@ const serviceUpdateTrait = {
       console.log('updateTraitTempColor SUCCESS');
       return dataUpdated;
     } catch (error) {
-        console.log('updateTraitTempColor ERROR: ', error);
-      dataUpdated = undefined;
+      console.log('updateTraitTempColor ERROR: ', error);
+      const dataUpdated = undefined;
       return dataUpdated;
     }
   },
 
-  updateTraitColor: async (deviceEuiInDB, value) => {  //value : "R, G, B"
+  updateTraitColor: async (deviceEuiInDB, value) => {
+    // value : "R, G, B"
     try {
-        console.log('updateTraitColor: ', value);
-        const rgbArray = value.split(',');
-        let valueUpdateInt = rgbToDec(parseInt(rgbArray[0]),parseInt(rgbArray[1]),parseInt(rgbArray[2]));
-        const fillter = { deviceEUI : deviceEuiInDB };
-        console.log('fillter: ', fillter);
-        const update =  { 'attributes.color.spectrumRgb': valueUpdateInt };
-        const option = { new: true };
-        const dataUpdated = await DeviceModel.findOneAndUpdate(
+      console.log('updateTraitColor: ', value);
+      const rgbArray = value.split(',');
+      const valueUpdateInt = rgbToDec(
+        parseInt(rgbArray[0]),
+        parseInt(rgbArray[1]),
+        parseInt(rgbArray[2])
+      );
+      const fillter = { deviceEUI: deviceEuiInDB };
+      console.log('fillter: ', fillter);
+      const update = { 'attributes.color.spectrumRgb': valueUpdateInt };
+      const option = { new: true };
+      const dataUpdated = await DeviceModel.findOneAndUpdate(
         fillter,
         { $set: update },
         option
-        );
+      );
 
-        const deviceReportObj = {
-            color: {
-                spectrumRgb : valueUpdateInt
-            },
-        };
+      const deviceReportObj = {
+        color: {
+          spectrumRgb: valueUpdateInt,
+        },
+      };
 
-        const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB).deviceEUI;
-        console.log('rawDeviceEUI: ', rawDeviceEUI);
+      const rawDeviceEUI = createRawDeviceEUI(deviceEuiInDB).deviceEUI;
+      console.log('rawDeviceEUI: ', rawDeviceEUI);
 
-        const keyToGetUserId = makeKeyUserId(rawDeviceEUI);
-        console.log('keyToGetUserId: ', keyToGetUserId);
+      const keyToGetUserId = makeKeyUserId(rawDeviceEUI);
+      console.log('keyToGetUserId: ', keyToGetUserId);
 
-        const userId = await redisService.getKey(keyToGetUserId);
-        console.log('userId: ', userId);
+      const userId = await redisService.getKey(keyToGetUserId);
+      console.log('userId: ', userId);
 
-        reportState(userId, deviceEuiInDB, deviceReportObj);
-        console.log('updateTraitColor SUCCESS');
-        return dataUpdated;
+      reportState(userId, deviceEuiInDB, deviceReportObj);
+      console.log('updateTraitColor SUCCESS');
+      return dataUpdated;
     } catch (error) {
-        console.log('updateTraitColor ERROR: ', error);
-        dataUpdated = undefined;
-        return dataUpdated;
+      console.log('updateTraitColor ERROR: ', error);
+      const dataUpdated = undefined;
+      return dataUpdated;
     }
   },
 };

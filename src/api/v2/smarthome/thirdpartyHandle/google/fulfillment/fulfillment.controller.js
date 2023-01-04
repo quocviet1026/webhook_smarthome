@@ -7,7 +7,9 @@ const {
   convertGoogleCommandToOneHomeTrait,
   getDataDevices,
 } = require('./fulfillment.service');
-const {controlDevice} = require('../../../oneHomeHandle/services/oneHome.service');
+const {
+  controlDevice,
+} = require('../../../oneHomeHandle/services/oneHome.service');
 
 const fulfillment = smarthome();
 
@@ -83,7 +85,6 @@ fulfillment.onExecute(async (body, headers) => {
 
     const listDeviceId = command.devices.map((device) => device.id);
     console.log('listDeviceId: ', listDeviceId);
-    
 
     // const listDeviceResponseCommands = listDeviceId.map((deviceId) => ({
     //   ids: [deviceId],
@@ -94,7 +95,10 @@ fulfillment.onExecute(async (body, headers) => {
     //   },
     // }));
 
-    listDeviceResponseCommands = await controlDevice(listDeviceId, executionConvert);
+    const listDeviceResponseCommands = await controlDevice(
+      listDeviceId,
+      executionConvert
+    );
 
     // eslint-disable-next-line prettier/prettier
     console.log('------------>listDeviceResponseCommands: ', listDeviceResponseCommands);
