@@ -4,8 +4,12 @@ const createError = require('http-errors');
 const jwtService = require('../../helpers/jwtService');
 
 module.exports = {
+  /* Handle authorization request: */
   authorization: (req, res, next) => {
-    console.log('---> authorization req.query: ', req.query);
+    console.log(
+      '\n\n---------->>>>>>>>>> HANDLE AUTHORIZATION REQUEST <<<<<<<<<<----------'
+    );
+    console.log('req.query: ', req.query);
 
     try {
       const {
@@ -13,14 +17,24 @@ module.exports = {
         client_id,
         redirect_uri,
         state,
-        // scope,
+        scope,
         // eslint-disable-next-line no-unused-vars
-        // response_type,
+        response_type,
         // eslint-disable-next-line no-unused-vars
-        // user_locale,
+        user_locale,
       } = req.query;
 
-      // Compare client_id
+      console.log('client_id: ', client_id);
+      console.log('redirect_uri: ', redirect_uri);
+      console.log('state: ', state);
+      console.log('scope: ', scope);
+      console.log('response_type: ', response_type);
+      console.log('user_locale: ', user_locale);
+
+      /**
+       * 1. Verify that the client_id matches the Client ID you assigned to Google,
+       * and that the redirect_uri matches the redirect URL provided by Google for your service
+       */
       if (client_id !== process.env.GOOGLE_SMARTHOME_CLIENT_ID) {
         console.error(`client_id invalid: ${client_id}`);
         throw createError.BadRequest();
@@ -28,24 +42,34 @@ module.exports = {
 
       const queryLogin = `?redirect_uri=${redirect_uri}&state=${state}`;
       console.log('queryLogin: ', queryLogin);
+
       const redirectUrl = `/v2/user/login${queryLogin}`;
       console.log('redirectUrl: ', redirectUrl);
+
+      // Redirect to route GET /v2/user/login
       return res.redirect(redirectUrl);
     } catch (error) {
       next(error);
     }
   },
 
+  /* Handle token exchange request: */
   token: async (req, res, next) => {
-    console.log('---> token req.body: ', req.body);
+    console.log(
+      '\n\n---------->>>>>>>>>> HANDLE TOKEN EXCHANGE REQUESTS <<<<<<<<<<----------'
+    );
+    console.log('req.body: ', req.body);
 
     try {
       const { client_id, client_secret, grant_type } = req.body;
-      console.log('---> client_id: ', client_id);
-      console.log('---> client_secret: ', client_secret);
-      console.log('---> grant_type: ', grant_type);
+      console.log('   client_id: ', client_id);
+      console.log('   client_secret: ', client_secret);
+      console.log('   grant_type: ', grant_type);
 
-      // verify clientId, clientSecret
+      /**
+       * 1. Verify that the client_id identifies the request origin as an authorized origin,
+       * and that the client_secret matches the expected value.
+       */
       if (
         client_id !== process.env.GOOGLE_SMARTHOME_CLIENT_ID ||
         client_secret !== process.env.GOOGLE_SMARTHOME_CLIENT_SECRET
@@ -60,7 +84,7 @@ module.exports = {
 
       switch (grant_type) {
         case 'authorization_code': {
-          // request exchange authorization code to get accesstoken
+          /* Exchange authorization codes for access tokens and refresh tokens */
           if (!req.body.code) {
             console.error(`code invalid`);
             throw createError.BadRequest(`code invalid: ${req.body.code}`);
@@ -81,15 +105,16 @@ module.exports = {
             token_type: 'Bearer',
             access_token: accessTokenAuthExchange,
             refresh_token: refreshTokenAuthExchange,
-            expires_in: 3600,
+            expires_in: 3600, // Google rule
           };
 
-          console.log('---> authorization_code SUCCESS!');
+          console.log('\n\n Handle authorization_code SUCCESS!');
           res.status(200).send(credentials);
 
           break;
         }
         case 'refresh_token': {
+          /* Exchange refresh tokens for access tokens */
           const { refresh_token } = req.body;
           console.log(`refresh_token: ${refresh_token}`);
 

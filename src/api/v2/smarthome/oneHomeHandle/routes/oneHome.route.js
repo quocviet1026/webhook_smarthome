@@ -88,20 +88,21 @@ mqttClient.on('message', (topic, message) => {
  * }
  *
  * updateData:
- *  {
- *  "typeMessage" : "updateData,
- *  "dataMessage" : {
- *      "properties" : {
- *          "command" : "updateStrait",
- *          "data"   : {
- *              "deviceEUI" : "",
- *              "trait" : "",
- *              "child" : 1,
- *              "value" : "",
- *              "timeStamp" : 121234123s
- *          }
- *      }
- * }
+{
+  "typeMessage": "updateData",
+  "dataMessage": {
+    "properties": {
+      "command": "updateStrait",
+      "data": {
+        "deviceEUI": "typeRDCCTLight_0x0002",
+        "trait": "traitOnOff",
+        "child": 1,
+        "value": "0",
+        "timeStamp": 121234123
+      }
+    }
+  }
+}
  */
 events.on(topicListenOnehomeGateway, (messageParsed) => {
   console.log('\n\n--------->>> MQTT oneHome messageParsed: ', messageParsed);

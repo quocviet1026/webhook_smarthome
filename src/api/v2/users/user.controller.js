@@ -1,4 +1,5 @@
 const createError = require('http-errors');
+const util = require('util');
 const {
   userRegisterValidate,
   userLoginValidate,
@@ -54,9 +55,16 @@ module.exports = {
     }
   },
 
+  /*
+   *Handle User login GET
+   */
   loginGet: async (req, res, next) => {
-    console.log(`---> loginPost body: ${req.body}`);
-    console.log(`---> loginPost query: ${req.query}`);
+    console.log('\n\n\n---------->>>>>>>>>> LOGIN GET <<<<<<<<<<----------');
+    console.log(
+      'loginPost query: ',
+      util.inspect(req.query, false, null, true)
+    );
+
     res.send(`<!DOCTYPE html>
         <html lang="en">
           <head>
@@ -78,29 +86,15 @@ module.exports = {
         </html>`);
   },
 
+  /*
+   *Handle User login
+   */
   loginPost: async (req, res, next) => {
-    console.log('---> loginPost body: ');
+    console.log('\n\n\n---------->>>>>>>>>> LOGIN POST <<<<<<<<<<----------');
     console.log('   email: ', req.body.email);
     console.log('   password: ', req.body.password);
     console.log('   redirect_uri: ', req.body.redirect_uri);
     console.log('   state: ', req.body.state);
-    console.log('--->loginPost query: ');
-    console.log('--->loginPost redirect_uri: ', req.query.redirect_uri);
-    console.log('--->loginPost state: ', req.query.state);
-
-    /* login query:
-                /login?redirect_uri=${redirect_uri}&state=${state}
-            */
-
-    /*
-            login request body:       
-            {
-                email: ""
-                password: "",
-                redirect_uri: "",
-                state: ""
-            } 
-            */
 
     try {
       // Valitade login request query
@@ -124,6 +118,11 @@ module.exports = {
         email,
       });
 
+      console.log(
+        '\n\n User data in Database: ',
+        util.inspect(user, false, null, true)
+      );
+
       if (!user) {
         throw createError.NotFound('User has not been register');
       }
@@ -139,10 +138,13 @@ module.exports = {
         user._id
       );
 
-      // Redirect to Google
+      /**
+       *  After verify user data and gen authorization code, Redirect to Google
+       *  Form redirect: https://oauth-redirect.googleusercontent.com/r/YOUR_PROJECT_ID?code=AUTHORIZATION_CODE&state=STATE_STRING
+       * */
       // eslint-disable-next-line camelcase
       const responseUrl = `${redirect_uri}?code=${authorizationCode}&state=${state}`;
-      console.log('responseUrl: ', responseUrl);
+      console.log('\n\n redirect to GOOLE ---> responseUrl: ', responseUrl);
       return res.redirect(responseUrl);
     } catch (error) {
       next(error);
@@ -155,7 +157,7 @@ module.exports = {
             {
                 "refreshToken" : ""
             } 
-            */
+    */
 
     try {
       console.log('refreshToken: ', req.body);
