@@ -57,23 +57,26 @@ mqttClient.on('message', (topic, message) => {
  * Message from Gateway to Cloud:
  * ---Register:
  *  addDevice
- * {
- *  "typeMessage" : "register",
- *  "dataMessage" : {
- *      "properties" : {
- *          "command" : "addDevice"
- *          "data"   : {
- *              "deviceEUI" : "",
- *              "deviceId" : "",
- *              "child" : [1,2,3],
- *              "deviceType" : "",
- *              "connectivityType" : "",
- *              "deviceName" : "",
- *              "gatewayId" : "",
- *              "userId" : ""
- *          }
- *      }
- * }
+{
+  "typeMessage": "register",
+  "dataMessage": {
+    "properties": {
+      "command": "addDevice",
+      "data": {
+        "deviceEUI": "basicLight_0x0001",
+        "deviceID": "basicLight_0x0001",
+        "child": [
+          1
+        ],
+        "deviceType": "basicLight",
+        "connectivityType": "zigbee",
+        "deviceName": "basicLight",
+        "gatewayId": "GW001",
+        "userId": "631710a2da842ecd127d5320"
+      }
+    }
+  }
+}
  *
  *  removeDevice
  * {
@@ -95,14 +98,15 @@ mqttClient.on('message', (topic, message) => {
       "command": "updateStrait",
       "data": {
         "deviceEUI": "typeRDCCTLight_0x0002",
-        "trait": "traitOnOff",
+        "strait": "traitOnOff",
         "child": 1,
-        "value": "0",
+        "value": "1",
         "timeStamp": 121234123
       }
     }
   }
 }
+
  */
 events.on(topicListenOnehomeGateway, (messageParsed) => {
   console.log('\n\n--------->>> MQTT oneHome messageParsed: ', messageParsed);
